@@ -8,16 +8,21 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <div class="app">
-      <div class="app__container">
+    <div class="app" id="search">
+      <div>
         <h1 class="app__title">Posts &#x2B50</h1>
         <h2 class="app__subtitle">Para buscar um post, insira uma palavra-chave.</h2>
         <form action="posts" method="get" accept-charset="utf-8">
           <label for="busca"></label>
-          <input type="text" name="busca" placeholder="Digite aqui." />
-          <a href="">Crie um post novo!</a>
+          <input
+            type="text"
+            name="busca"
+            placeholder="Digite aqui."
+            id="app__pesquisa"
+          />
+          <a href="#register">Crie um post novo!</a>
           <div id="app__erro"></div>
-          <input type="submit" value="Pesquisar" />
+          <input type="submit" value="Pesquisar" id="app_btn-search" />
         </form>
         <ul>
           {{#posts}}
@@ -29,23 +34,26 @@
           {{/posts}}
         </ul>
       </div>
-      <div class="app__container">
+    </div>
+    <div class="app" id="register">
+      <div>
         <h1 class="app__title">Novas postagens &#x2B50</h1>
         <h2 class="app__subtitle">
           Para registrar um artigo, insira o titulo, a descrição e o link.
         </h2>
         <form action="posts" method="post" accept-charset="utf-8">
           <label for="title">Titulo:</label>
-          <input type="text" name="title" />
+          <input type="text" name="title" id="app__title" />
           <label for="description">Descrição:</label>
-          <input type="text" name="description" />
+          <input type="text" name="description" id="app__description" />
           <label for="link">Link:</label>
-          <input type="text" name="link" />
-          <a href="posts">Volte para a aba de pesquisa.</a>
+          <input type="text" name="link" id="app__link" />
+          <a href="#search">Volte para a aba de pesquisa.</a>
           <div id="app__erro-register"></div>
-          <input type="submit" value="Adicionar" />
+          <input type="submit" value="Adicionar" id="app_btn-register" />
         </form>
       </div>
     </div>
+    <script src="../js/app.js"></script>
   </body>
 </html>
