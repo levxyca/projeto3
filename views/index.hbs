@@ -102,27 +102,34 @@
           <section id="modal__login" class="modal">
             <div class="modal__content">
               <h1 class="modal__login-title">Faça login na sua conta</h1>
-              <div class="modal__login-error"></div>
               <h1 class="modal__login-title-sucesso none">
                 Login realizado com sucesso!
               </h1>
-              <form class="modal__login-form form">
+              <form
+                action="login"
+                method="post"
+                accept-charset="utf-8"
+                class="modal__login-form form"
+              >
+                <label for="user"></label>
                 <input
                   type="text"
                   id="user"
                   name="user"
                   placeholder="Usuário(a)"
                 />
+                <label for="pass"></label>
                 <input
                   type="password"
                   id="pass"
                   name="pass"
                   placeholder="Senha"
                 />
+                <div class="modal__login-error"></div>
                 <p>Não possui uma conta?</p>
                 <a href="#modal__register">Se registre aqui.</a>
                 <input
-                  type="button"
+                  type="submit"
                   name="login"
                   id="login__submit"
                   class="login modal__login-submit"
@@ -224,7 +231,6 @@
       <a href="posts">Você está logado! Clique aqui para acessar seus posts.</a>
     </div>
     <script src="../js/index.js"></script>
-    <script src="../js/isLogged.js"></script>
     <script src="../js/login.js"></script>
     <script src="../js/register.js"></script>
   </body>
