@@ -1,10 +1,12 @@
 const cookieParser = require("cookie-parser");
+const async = require("hbs/lib/async");
 
 let http = require("http"),
   path = require("path"),
   express = require("express"),
   app = express(),
-  Posts = require("./models/posts");
+  Posts = require("./models/posts"),
+  Users = require("./models/users");
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
@@ -19,16 +21,23 @@ app.get("/", (req, res) => {
   return res.render("index");
 });
 
-app.post("/login", (req, res, next) => {
+app.post("/login", async (req, res, next) => {
   let login = req.body.user;
   let password = req.body.pass;
-  console.log(login, password);
-  if (login === "leticia" && password === "123") {
+  let users = await Users.find(login, password);
+  if (users) {
     res.cookie("login", "leticia");
     return res.redirect("/posts");
   } else {
     return res.redirect("/#modal__login");
   }
+});
+
+app.post("/register", async (req, res, next) => {
+  let login = req.body.user;
+  let password = req.body.pass;
+  Users.insert(login, password);
+  return res.redirect("/#modal__login");
 });
 
 app.get("/posts", async (req, res) => {

@@ -146,7 +146,7 @@
                 Registro realizado com sucesso!
               </h1>
               <div class="modal__register-error"></div>
-              <form class="modal__register-form form">
+              <form action="register" method="post" accept-charset="utf-8" class="modal__register-form form">
                 <input
                   type="text"
                   id="userRegister"
@@ -160,7 +160,7 @@
                   placeholder="Senha"
                 />
                 <input
-                  type="button"
+                  type="submit"
                   name="register"
                   id="register__submit"
                   class="login modal__register-submit"
@@ -226,9 +226,6 @@
           alt="Imagem com os devices"
         />
       </section>
-    </div>
-    <div class="app none" id="app">
-      <a href="posts">Você está logado! Clique aqui para acessar seus posts.</a>
     </div>
     <script src="../js/index.js"></script>
     <script src="../js/login.js"></script>
