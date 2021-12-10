@@ -127,7 +127,8 @@ input[type="password"] {
   box-sizing: border-box;
 }
 
-input[type="submit"] {
+input[type="submit"],
+input[type="button"] {
   font-weight: 600;
   text-transform: uppercase;
   background-color: #4aa1ff;
