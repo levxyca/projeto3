@@ -51,12 +51,27 @@ app.post("/login", async (req, res, next) => {
 app.post("/register", async (req, res, next) => {
   let login = req.body.user;
   let password = req.body.pass;
-  Users.insert(login, password);
-  return res.redirect("/#modal__login");
+  const user = await Users.findOne(login);
+  if (user === null) {
+    if (login.length > 3 || password.length > 3) {
+      Users.insert(login, password);
+      return res.redirect("/#modal__login");
+    } else {
+      return res.redirect("/#modal__register");
+    }
+  } else {
+    return res.redirect("/#modal__register");
+  }
 });
 
 app.get("/posts", async (req, res) => {
   if (req.cookies && req.cookies.login) {
+    if (req.session.views) {
+      req.session.views++;
+    } else {
+      req.session.views = 1;
+    }
+    res.cookie("views", req.session.views);
     const busca = req.query.busca;
     const posts = await Posts.find(busca);
     return res.render("posts", { posts: posts });
@@ -69,6 +84,12 @@ app.post("/posts", async (req, res) => {
   const description = req.body.description;
   const link = req.body.link;
   Posts.insert(title, description, link);
+  if (req.session.posts) {
+    req.session.posts++;
+  } else {
+    req.session.posts = 1;
+  }
+  res.cookie("posts", req.session.posts);
   return res.redirect("/posts");
 });
 
