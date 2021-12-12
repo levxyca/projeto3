@@ -6,7 +6,7 @@ module.exports = class Users {
       "mongodb+srv://let:123@cluster0.ltkkd.mongodb.net/posts?retryWrites=true&w=majority"
     );
     const db = conn.db();
-    let result;
+    let result; 
     if ((login, password))
       result = await db
         .collection("users")

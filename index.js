@@ -3,6 +3,7 @@ const async = require("hbs/lib/async");
 
 let http = require("http"),
   path = require("path"),
+  session = require("express-session"),
   express = require("express"),
   app = express(),
   Posts = require("./models/posts"),
@@ -13,6 +14,14 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+  session({
+    secret: "leticia123",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  })
+);
 
 app.get("/", (req, res) => {
   if (req.cookies && req.cookies.login) {
@@ -24,9 +33,15 @@ app.get("/", (req, res) => {
 app.post("/login", async (req, res, next) => {
   let login = req.body.user;
   let password = req.body.pass;
+
   let users = await Users.find(login, password);
-  if (users) {
-    res.cookie("login", "leticia");
+  console.log(users);
+
+  if (users === null) {
+    return res.redirect("/#modal__login");
+  } else if (users.user && users.pass) {
+    res.cookie("login", login);
+    req.session.login = login;
     return res.redirect("/posts");
   } else {
     return res.redirect("/#modal__login");
