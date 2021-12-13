@@ -13,8 +13,6 @@ btnSearch.addEventListener("click", () => {
 
   if (content == "") {
     respostaErroApp.innerHTML = "Você precisa inserir pelo menos 1 caractere!";
-  } else {
-    console.log("tudo ok");
   }
 });
 
@@ -25,7 +23,5 @@ btnRegister.addEventListener("click", () => {
   if (title == "" || link == "") {
     respostaErroAppRegistro.innerHTML =
       "Você precisa inserir pelo menos 1 caractere em cada campo!";
-  } else {
-    console.log("ok");
   }
 });

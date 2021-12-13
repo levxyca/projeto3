@@ -1,6 +1,8 @@
 const cookieParser = require("cookie-parser");
 const async = require("hbs/lib/async");
 
+const adm = "61b3b5aed7f6fc4d73c01f06";
+
 let http = require("http"),
   path = require("path"),
   session = require("express-session"),
@@ -41,8 +43,9 @@ app.post("/login", async (req, res, next) => {
     return res.redirect("/#modal__login");
   } else if (users.user && users.pass) {
     res.cookie("login", login);
+    res.cookie("id", users._id);
     req.session.login = login;
-    return res.redirect("/posts");
+    return res.redirect("/posts#search");
   } else {
     return res.redirect("/#modal__login");
   }
@@ -80,17 +83,25 @@ app.get("/posts", async (req, res) => {
 });
 
 app.post("/posts", async (req, res) => {
-  const title = req.body.title;
-  const description = req.body.description;
-  const link = req.body.link;
-  Posts.insert(title, description, link);
-  if (req.session.posts) {
-    req.session.posts++;
+  if (req.cookies.login === "leticia" && req.cookies.id === adm) {
+    const title = req.body.title;
+    const description = req.body.description;
+    const link = req.body.link;
+    if (title.length > 0 && description.length > 0 && link.length > 0) {
+      Posts.insert(title, description, link);
+      if (req.session.posts) {
+        req.session.posts++;
+      } else {
+        req.session.posts = 1;
+      }
+    } else {
+      return res.redirect("/posts#register");
+    }
+    res.cookie("posts", req.session.posts);
+    return res.redirect("/posts#search");
   } else {
-    req.session.posts = 1;
+    return res.redirect("/posts#search");
   }
-  res.cookie("posts", req.session.posts);
-  return res.redirect("/posts");
 });
 
 const port = 3000;
