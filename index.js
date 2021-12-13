@@ -21,7 +21,7 @@ app.use(
     secret: "leticia123",
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false },
+    cookie: { secure: true, maxAge: 60000 },
   })
 );
 
