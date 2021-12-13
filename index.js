@@ -104,7 +104,7 @@ app.post("/posts", async (req, res) => {
   }
 });
 
-const port = 3000;
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}/`);
